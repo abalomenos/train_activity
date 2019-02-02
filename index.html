@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>SkyComTech</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="favicon.ico" rel="shortcut icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="./assets/css/reset.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="./assets/css/animate.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="./assets/css/style.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="./assets/css/trainActivity.css"/>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.1/firebase.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+
+    
+
+</head>
+<body>
+
+    <nav>
+        <div class="navWrapper">
+            <div class="navLeft">
+                <h1>Aris Balomenos</h1>
+            </div>
+            <div class="navRight">
+                <div class="topnav" id="myTopnav">
+                    <a href="index.html">About</a>
+                    <a href="index.html" class="active">Portfolio</a>
+                    <a href="index.html">Contact</a>
+                    <a href="javascript:void(0);" class="icon">
+                        <i class="fa fa-bars"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section>
+            
+        <div class="trainActivity">
+                
+            
+            
+                <h2>Train Activity</h2>
+            <hr>
+            <div class="gameContainer">
+                <div id="container">
+                    <div id="loginContainer">
+                            <a href="#" id="loginButton"><span>Login</span><em></em></a>
+                            <div style="clear:both"></div>
+                            <div id="loginBox">                
+                                <form id="loginForm">
+                                    <fieldset id="body">
+                                        <fieldset>
+                                            <label for="email">Email Address</label>
+                                            <input type="text" name="email" id="email" />
+                                        </fieldset>
+                                        <fieldset>
+                                            <label for="password">Password</label>
+                                            <input type="password" name="password" id="password" />
+                                        </fieldset>
+                                        <input type="submit" id="login" value="Sign in" />
+                                        <!-- <label for="checkbox"><input type="checkbox" id="checkbox" />Remember me</label> -->
+                                    </fieldset>
+                                    <!-- <span><a href="#">Forgot your password?</a></span> -->
+                                </form>
+                            </div>
+                        </div>
+                        <div id="registerContainer">
+                            <a href="#" id="registerButton"><span>Register</span><em></em></a>
+                            <div style="clear:both"></div>
+                            <div id="registerBox">                
+                                <form id="registerForm">
+                                    <fieldset id="body">
+                                        <fieldset>
+                                            <label for="emailRegister">Email Address</label>
+                                            <input type="text" name="emailRegister" id="emailRegister" />
+                                        </fieldset>
+                                        <fieldset>
+                                            <label for="passwordRegister">Password</label>
+                                            <input type="password" name="passwordRegister" id="passwordRegister" />
+                                        </fieldset>
+                                        <input type="submit" id="register" value="Register" />
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="logoutContainer">
+                        <div id="userName"></div>
+                        <a href="#" id="logoutButton"><span>Logout</span><em></em></a>
+                        <br>
+                    </div>
+
+                
+                <div class = "leftContainer">
+                    <div class ="leftHeader">
+                        <h4>Train Schedule</h4>
+                    </div>
+                    <div class ="rightHeader">
+                            <h4 id="currentTime"></h4>
+                    </div>
+                    <table id="trainSchedule">
+                        <thead>
+                            <tr>
+                                <th>Train Name</th>
+                                <th>Destination</th>
+                                <th>Frequency (min)</th>
+                                <th>Next Arrival</th>
+                                <th>Minutes Away</th>
+                                <th id="admin">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <div class = "rightContainer">
+                    <!-- <div id="login">
+                        <h3>Login</h3>
+                        <form id="loginForm">
+                            <div>
+                                <label for="loginEmail">Email</label>
+                                <input type="email" class="form-control" id="loginEmail" placeholder="Enter admin email">
+                            </div>
+                            <div>
+                                <label for="loginPassword">Password</label>
+                                <input type="password" class="form-control" id="loginPassword" placeholder="Enter admin password">
+                            </div>
+                            <button type="submit" id="loginSubmit">Submit</button>
+                        </form>
+                    </div> -->
+                    
+                    <div id="addTrains">
+                        <h3>Add Train</h3>
+                        <form id="addTrainsForm">
+                            <div>
+                                <label for="trainName">Train Name</label>
+                                <input type="text" id="trainName">
+                            </div>
+                            <div>
+                                <label for="trainDestination">Destination</label>
+                                <input type="text" id="trainDestination">
+                            </div>
+                            <div>
+                                <label for="trainFirstTime">Start Time</label>
+                                <input type="text" id="trainFirstTime" required placeholder="(HH:mm) military time" onkeyup="myFunction()">
+                            </div>
+                            <div>
+                                <label for="trainFrequency">Frequency</label>
+                                <input type="text" id="trainFrequency" placeholder="(min)">
+                            </div>
+                            <button type="submit" id="addTrain">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        2019 &copy; SkyComTech
+    </footer>
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script> -->
+    <script src="./assets/javascript/main.js"></script>
+    <script src="./assets/javascript/trainActivity.js"></script>
+</body>
+</html>

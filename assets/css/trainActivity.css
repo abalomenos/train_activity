@@ -1,0 +1,385 @@
+
+.trainActivity {
+    padding: 25px;
+    color: #777777;
+    background-color: #ffffff;
+    border-color: #dddddd;
+    font-size: 16px;
+    line-height: 1.5;
+    text-align: left;
+    overflow: hidden;
+}
+
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.gameContainer {
+    /* width: 100%; */
+    overflow: hidden;
+}
+
+.leftContainer {
+    float: left;
+    margin: 2px auto;
+    text-align: left;
+    max-width: 600px;
+    
+}
+
+.rightContainer {
+    float: right;
+    margin: 2px auto;
+    text-align: left;
+    max-width: 200px;
+}
+
+
+
+
+.leftHeader {
+    float: left;
+    margin: 2px auto;
+    text-align: left;
+}
+
+.rightHeader {
+    float: right;
+    margin: 2px auto;
+    text-align: center;
+    /* width: 140px; */
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+
+tr {
+    border: 1px solid #dddddd;
+    /* margin: 15px; */
+}
+
+td:nth-child(1n+3) {
+    text-align: center;
+}
+
+thead th {
+    background: rgb(63, 63, 63);
+}
+
+th, td {
+    padding: 5px;
+    
+    vertical-align: middle;
+}
+
+tr:nth-child(odd) {
+    background: #ccc;
+}
+
+
+
+#addTrains {
+    display: none;
+}
+
+#logoutContainer {
+    display: none;
+}
+
+#admin {
+    display: none;
+}
+
+h4 {
+    text-align: left;
+}
+
+/* img {
+    display: block;
+    margin: 0 auto;
+} */
+
+.removeTrain {
+    cursor: pointer;
+}
+
+
+@media only screen and (max-width: 980px), (min-device-width: 768px) and (max-device-width: 1024px)  {
+
+    /* Force table to not be like tables anymore */
+    table, thead, tbody, th, td, tr {
+        display: block;
+        overflow: hidden;
+    }
+
+    /* Hide table headers (but not display: none;, for accessibility) */
+    thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    tr {
+    margin: 0 0 16px 0;
+    overflow: hidden;
+    }
+    
+    tr:nth-child(odd) {
+    background: #ccc;
+    }
+    
+    td:nth-child(1n+3) {
+        text-align: left;
+    }
+
+    td {
+        /* Behave  like a "row" */
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 50%;
+        
+    }
+
+    td:before {
+        /* Now like a table header */
+        position: absolute;
+        /* Top/left values mimic padding */
+        top: 0px;
+        left: 0px;
+        width: 40%;
+        padding: 10px;
+        white-space: nowrap;
+        
+        
+    }
+
+    /* td#admin {
+        
+        margin: 0 auto;
+    } */
+    /*
+    Label the data
+You could also use a data-* attribute and content for this. That way "bloats" the HTML, this way means you need to keep HTML and CSS in sync. Lea Verou has a clever way to handle with text-shadow.
+    */
+    td:nth-of-type(1):before { content: "Train Name"; }
+    td:nth-of-type(2):before { content: "Destination"; }
+    td:nth-of-type(3):before { content: "Frequency (min)"; }
+    td:nth-of-type(4):before { content: "Next Arrival"; }
+    td:nth-of-type(5):before { content: "Minutes Away"; }
+    td:nth-of-type(6):before { content: "Delete"; }
+
+    .leftContainer {
+        float: none;
+    }
+
+    .rightContainer {
+        float: none;
+        
+    }
+    .leftHeader {
+        float: none;
+        display: inline-block;
+    }
+    
+    /* .rightHeader {
+        display: block;
+    } */        
+}
+
+
+
+
+/*------- Firebase Logout -------*/
+
+#logoutContainer {
+    position:relative;
+    display: none;
+    overflow: hidden;
+    font-size:12px;
+}
+
+#userName {
+    float:left;
+    position:relative;
+    font-weight:bold; 
+    text-shadow:1px 1px #fff; 
+    padding:9px;
+}
+
+#logoutButton { 
+    float:right;
+    position:relative;
+    /* top:0px;
+    right:0px; */
+    cursor:pointer;
+    text-decoration: none;
+}
+
+
+#logoutButton span {
+    color:#777777; 
+    font-size:14px; 
+    font-weight:bold; 
+    text-shadow:1px 1px #fff; 
+    padding:7px 29px 9px 0px;
+    background:url(../images/loginArrow.png) no-repeat 53px 7px;
+    display:block;
+    
+}
+
+#logoutButton:hover span{
+
+    color:#333333;
+}
+
+/*------- Firebase Logout End -------*/
+
+/*------- Firebase Login / Register -------*/
+#container {
+    max-width: 200px;
+    float: right;
+}
+
+#loginContainer {
+    float: left;
+    position:relative;
+    display: block;
+    /* overflow: hidden; */
+    font-size:12px;
+}
+
+#registerContainer {
+    float: right;
+    position:relative;
+    display: block;
+    /* overflow: hidden; */
+    font-size:12px;
+}
+
+/* Login Button */
+#loginButton, #registerButton { 
+    float:right;
+    position: relative;;
+    /* top:0px;
+    right:0px; */
+    cursor:pointer;
+    /* overflow: hidden; */
+}
+
+/* Login Button Text */
+#loginButton span, #registerButton span {
+    color:#777777;
+    font-size:14px; 
+    font-weight:bold; 
+    text-shadow:1px 1px #fff;
+    padding:7px 29px 9px 10px;
+    background:url(../images/loginArrow.png) no-repeat 53px 7px;
+    display:block;
+}
+
+#registerButton span {
+    padding-left: 0px;
+}
+
+#loginButton:hover span, #registerButton:hover span{
+    color:#333333;
+}
+
+#loginButton.active span, #registerButton.active span {
+    background-position:53px -76px;
+}
+
+/* Login Box */
+#loginBox, #registerBox {
+    position:absolute;
+    top:30px;
+    right:0;
+    display:none;
+    z-index:1;
+}
+
+
+/* Login Form */
+#loginForm, #registerForm {
+    width:248px; 
+    border:1px solid #899caa;
+    border-radius:3px 0 3px 3px;
+    -moz-border-radius:3px 0 3px 3px;
+    margin-top:-1px;
+    background:#d2e0ea;
+    padding:6px;
+}
+
+#loginForm fieldset, #registerForm fieldset {
+    margin:0 0 12px 0;
+    display:block;
+    border:0;
+    padding:0;
+    /* width: 100%; */
+}
+
+fieldset#body {
+    background:#fff;
+    border-radius:3px;
+    -moz-border-radius:3px;
+    padding:10px 13px;
+    margin:0;
+}
+
+#body label {
+    color:#3a454d;
+    margin:9px 0 0 0;
+    display:block;
+    float:left;
+}
+
+#loginForm #body fieldset label, #registerForm #body fieldset label {
+    display:block;
+    float:none;
+    margin:0 0 6px 0;
+}
+
+/* Default Input */
+#loginForm input, #registerForm input {
+    width:92%;
+    border:1px solid #899caa;
+    border-radius:3px;
+    -moz-border-radius:3px;
+    color:#3a454d;
+    font-weight:bold;
+    padding:8px 8px;
+    box-shadow:inset 0px 1px 3px #bbb;
+    -webkit-box-shadow:inset 0px 1px 3px #bbb;
+    -moz-box-shadow:inset 0px 1px 3px #bbb;
+    font-size:12px;
+}
+
+/* Sign In Button */
+#loginForm #login, #registerForm #register {
+    width:auto;
+    float:left;
+    background:#339cdf;
+    color:#fff;
+    padding:7px 10px 8px 10px;
+    text-shadow:0px -1px #278db8;
+    border:1px solid #339cdf;
+    box-shadow:none;
+    -moz-box-shadow:none;
+    -webkit-box-shadow:none;
+    margin:0 12px 0 0;
+    cursor:pointer;
+    /* *padding:7px 2px 8px 2px; IE7 Fix */
+}
+
+input:focus {
+    outline:none;
+}
+
+
+/*------- Firebase Login / Register End -------*/

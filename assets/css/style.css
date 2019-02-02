@@ -1,0 +1,682 @@
+
+/*------------ Main Structure ------------*/
+
+html {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)) repeat, url("../images/background_img.jpg") no-repeat center center;
+    /* min-height: 100%; */
+    min-height: 100vh;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    image-rendering: auto;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #777777;
+    font-size: 16px;
+}
+
+section {
+    width: 960px;
+    padding: 125px 0;
+    margin: 0 auto;
+    background-color: transparent;
+    overflow: hidden;
+    display: block;
+    position: relative;    
+}
+
+.about, .contact, .portfolio {
+    padding: 25px;
+    color: #777777;
+    background-color: #ffffff;
+    border-color: #dddddd;
+    font-size: 16px;
+    line-height: 1.5;
+    text-align: left;
+}
+
+.form, .aboutContent, .portfolio ul {
+    width: 100%;
+    margin: 0 auto;
+    padding: 15px;
+
+    /* Avoid input and textarea getting pushed outside of div from padding */
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    /* Avoid input and textarea getting pushed outside of div from padding */
+}
+
+footer {
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    padding-top: 20px; /* changed padding from basic portfolio, did not like the look :) */
+    padding-bottom: 10px;
+	color: #cccccc;
+	background-color: #666666;
+	border-top: 4px solid #8FBFD3; /* changed porder from basic portfolio, did not like the look of :) */
+    text-align: center;
+}
+
+/* Clearfix hack */
+.about,.portfolio,.contact::after{
+    content: "";
+    display: block;
+    clear: both;
+}
+
+/* Define h1 style */
+h1 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffffff;
+    border-color: #cccccc;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+
+    /* CSS Animations */
+    -webkit-animation: logo1 linear 6s 1s forwards; /* Safari 4.0 - 8.0 */
+    animation: logo1 linear 6s 1s forwards; /* or use "alternate infinite" to keep indefinitely - for my reference */
+    /* CSS Animations */
+}
+
+/* Define h2 style */
+h2 {
+    font-size: 34px;
+    font-weight: bold;
+    color: #258EBB;;
+    border-color: #cccccc;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+
+    /* CSS Animations - actually aligning left due to width 0, doing this for mobile view transition */
+    width: 0%;
+    white-space: nowrap;
+    text-align: center;
+    transition: width ease;
+    -webkit-animation: header2 linear 1s forwards; /* Safari 4.0 - 8.0 */
+    animation: header2 linear 1s forwards;
+    /* CSS Animations - actually aligning left due to width 0, doing this for mobile view transition */
+}
+
+h3 {
+    font-size: 14px;
+    font-weight: bold;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    text-align: center;
+}
+
+h4 {
+    font-size: 20px;
+    font-weight: bold;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    text-align: center;
+    color: #ac856c;
+}
+
+h5 {
+    font-size: 16px;
+    font-weight: bold;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    text-align: center;
+    color: #00ff00;
+}
+
+h6 {
+    font-size: 16px;
+    font-weight: bold;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    text-align: center;
+    color: #FF0018;
+}
+
+/* Define hr style */
+hr {
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #dddddd;
+}
+
+button {
+    outline: 0px;
+}
+
+/*---------- Main Structure End ----------*/
+
+
+/*------------ Navigation ------------*/
+
+nav {
+    position: fixed;
+    width: 100%;
+    margin: 0 auto;
+    height: 72px;
+    background-color: #ffffff;
+    border-bottom: 4px solid #cccccc;
+    z-index: 1; /* To avoid content from going over navbar when scrolling */
+}
+
+.navWrapper {
+    width: 960px;
+    margin: 0 auto;
+}
+
+.navLeft {
+    float:left;
+    background-color: #258EBB;
+    padding: 24px 15px;
+    margin: 0;
+
+    /* CSS Animations */
+    -webkit-animation: logo2 linear 6s 1s forwards; /* Safari 4.0 - 8.0 */
+    animation: logo2 linear 6s 1s forwards; /* or use "alternate infinite" to keep indefinitely - for my reference */
+    /* CSS Animations */
+}
+
+.navRight {
+    float: right;
+    font-size: 14px;
+}
+
+/* Navigation separator | - Not used here, keeping it for future reference */
+/* .navWrapper ul li+li {
+	border-left: 1px solid #dddddd;
+} */
+ 
+.navWrapper a {
+    padding: 100% 8px 30px 8px;
+    margin: 10px;
+    text-align: right;
+    text-decoration: none; /* remove underlining */
+}
+
+.navWrapper a:link {
+    color: #999999;
+}
+
+.navWrapper a:visited {
+    color: #999999;
+}
+
+.navWrapper a:hover {
+    color: #222222;
+}
+
+.navWrapper a.active {
+    color: #222222;
+}
+
+/*---------- Navigation End ----------*/
+
+
+ /*------------ Hamburger Nav ------------*/
+
+.topnav {
+  overflow: hidden;
+  padding-left: 0px;
+  min-height: 72px;
+  background-color: #ffffff;
+}
+
+.topnav a {
+  float: left;
+  display: block;
+  text-align: center;
+  padding: 28px 16px;
+  margin: 0;
+}
+
+/*Hamburger color */
+.topnav a:hover {
+  color: #000000;
+}
+
+.topnav .icon {
+  display: none;
+}
+
+/*---------- Hamburger Nav End ----------*/
+
+
+/*------------ About Page ------------*/
+
+.about p {
+    text-align: justify;
+}
+
+img.profile {
+    float: left;
+    padding: 10px 20px 20px 0px;
+    width: 200px;
+    height: 200px;
+}
+
+/*---------- About Page End ----------*/
+
+
+/*------------ Portfolio Page ------------*/
+
+.portfolio ul {
+    padding: 5px;
+    text-align: center;
+}
+
+.portfolio li {
+    position: relative;
+    display: inline-block;
+	width: 270px;
+    height: 200px;
+    border: 2px solid #dddddd;
+    margin: 10px;
+    padding: 0;
+    transition: all .2s ease-in-out; /* Scale on Hover with Transition */
+}
+
+.portfolio p {
+    position: absolute;
+    width: 100%;
+	bottom: 30px;
+	text-align: center;
+	background-color: #258EBB;
+	padding: 10px 0px 10px 0px;
+	color: #ffffff;
+}
+
+ /* Scale on Hover with Transition */
+.portfolio li:hover {
+    transform: scale(1.1);
+}
+
+/*---------- Portfolio Page End ----------*/
+
+
+/*------------ Portfolio Items ------------*/
+
+table, th, td, tr {
+    padding: 5px;
+}
+
+#gameStart {
+    position: relative;
+    top: 100px;
+    padding: 0 50px;
+    margin: 0 auto;
+    min-width: 100px;
+    max-width: 450px;
+    text-align: center;   
+}
+
+.centerMessage {
+    padding: 20px;
+    margin: 0 auto;
+    color: black;
+    background-color: blanchedalmond;
+    cursor: pointer;
+}
+
+/*---------- Portfolio Items End ----------*/
+
+
+/*------------ Contact Page ------------*/
+
+#contactform {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 auto;
+}
+
+input[type=text], textarea {
+    width: 100%;
+    margin: 0 auto;
+    padding: 15px;
+    border: 1px solid #dddddd;
+    color: #cccccc;
+    border-radius: 4px; /* rounded corners */
+
+    /* Avoid input and textarea getting pushed outside of div from padding */
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    /* Avoid input and textarea getting pushed outside of div from padding */
+}
+
+textarea {
+    height: 200px;
+}
+
+#submit {
+	background-color: #258EBB;
+	color: #ffffff;
+	border: none;
+    padding: 15px 24px;
+    border-radius: 4px; /* rounded corners */
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19); /* Shadow effect */
+
+    /* CSS Animations - actually aligning left due to width 0, doing this for mobile view transition */
+    width: 100px;
+    white-space: nowrap;
+    text-align: center;
+    transition: width ease;
+    -webkit-animation: submit linear 1s forwards; /* Safari 4.0 - 8.0 */
+    animation: submit linear 1s forwards;
+    /* CSS Animations - actually aligning left due to width 0, doing this for mobile view transition */
+}
+
+#submit:hover
+{
+    background-color: #8FBFD3;
+}
+
+/*---------- Contact Page End ----------*/
+
+
+/*------------ CSS Animations ------------*/
+
+@-webkit-keyframes logo1 { /* Safari 4.0 - 8.0 */
+    from {
+        color: #ffffff;
+    }
+    to {
+        color: transparent;
+    }
+}
+
+@-webkit-keyframes logo2 { /* Safari 4.0 - 8.0 */
+    0% {
+        opacity: 1;
+        background: unset;
+        background-color: #258EBB;
+    }
+    20% {
+        opacity: 0.5;
+        background: unset;
+        background-color: #258EBB;
+    }
+    40% {
+        opacity: 0;
+        background: unset;
+        background-color: #258EBB;
+    }
+    60% {
+        opacity: 0;
+        background: url("../images/skycomtechS.png") no-repeat;
+        background-size: auto;
+        image-rendering: auto;
+        image-rendering: crisp-edges;
+        image-rendering: pixelated;
+    }
+    80% {
+        opacity: 0.5;
+        background: url("../images/skycomtechS.png") no-repeat;
+        background-size: auto;
+        image-rendering: auto;
+        image-rendering: crisp-edges;
+        image-rendering: pixelated;
+    }
+    100% {
+        opacity: 1;
+        background: url("../images/skycomtechS.png") no-repeat;
+        background-size: auto;
+        image-rendering: auto;
+        image-rendering: crisp-edges;
+        image-rendering: pixelated;
+    }
+}
+
+@keyframes logo1 { /* Standard syntax */
+    from {
+        color: #ffffff;
+    }
+    to {
+        color: transparent;
+    }
+}
+
+@keyframes logo2 { /* Standard syntax */
+    0% {
+        opacity: 1;
+        background: unset;
+        background-color: #258EBB;
+    }
+    20% {
+        opacity: 0.5;
+        background: unset;
+        background-color: #258EBB;
+    }
+    40% {
+        opacity: 0;
+        background: unset;
+        background-color: #258EBB;
+    }
+    60% {
+        opacity: 0;
+        background: url("../images/skycomtechS.png") no-repeat;
+        background-size: auto;
+        image-rendering: auto;
+        image-rendering: crisp-edges;
+        image-rendering: pixelated;
+    }
+    80% {
+        opacity: 0.5;
+        background: url("../images/skycomtechS.png") no-repeat;
+        background-size: auto;
+        image-rendering: auto;
+        image-rendering: crisp-edges;
+        image-rendering: pixelated;
+    }
+    100% {
+        opacity: 1;
+        background: url("../images/skycomtechS.png") no-repeat;
+        background-size: auto;
+        image-rendering: auto;
+        image-rendering: crisp-edges;
+        image-rendering: pixelated;
+    }
+}
+
+/*---------- CSS Animations End ----------*/
+
+
+/*------------ Media Queries ------------*/
+
+@media only screen and (max-width: 980px) {
+
+    .navWrapper {
+        width: 750px;
+    }
+
+    section {
+        width: 750px;
+    }
+
+}
+
+@media only screen and (max-width: 768px) and (min-width: 1px) { /* Want to apply this to below media query as well - in order not to repeat the same code.. */
+
+    html {
+        background: #ffffff;
+    }
+
+    body {
+        /* Workaround for footer */
+        /* height: 100%; */
+        min-height: 100vh;
+        position: relative;
+        margin: 0;
+        padding: 0;
+        /* Workaround for footer */
+    }
+
+    .navWrapper {
+        width: 100%;
+    }
+
+    section {
+        width: 100%;
+        padding-top: 60px;
+        padding-bottom: 50px;
+
+        /* Workaround for footer */
+        /* min-height: 100vh; */
+        overflow: hidden;
+        display: block;
+        position: relative;
+        /* Workaround for footer */
+    }
+
+}
+
+@media only screen and (max-width: 640px) {
+    
+    /* CSS Animation specific to mobile */
+    @-webkit-keyframes header2 { /* Safari 4.0 - 8.0 */
+        0% {
+            width: 0;
+        }
+        100% {
+            width: 100%;
+        }
+    }
+
+    @keyframes header2 { /* Standard syntax */
+        0% {
+            width: 0;
+        }
+        100% {
+            width: 100%;
+        }
+    }
+
+    @-webkit-keyframes submit { /* Safari 4.0 - 8.0 */
+        0% {
+            width: 100px;
+        }
+        100% {
+            width: 100%;
+        }
+    }
+
+    @keyframes submit { /* Standard syntax */
+        0% {
+            width: 100px;
+        }
+        100% {
+            width: 100%;
+        }
+    }
+    /* CSS Animation specific to mobile */
+
+    nav {
+        position: relative; /* Static was requested, but need to use relative to accomplish the same result due to Hamburger Nav */
+    }
+
+    section {
+        padding-top: 0px;
+    }
+
+    /* Similar to nav, so it wont stick on the bottom for small screens */
+    footer {
+        position: absolute;
+        bottom: 0;
+    }
+
+    .about, .contact, .portfolio {
+        padding-top: 9px;
+    }
+
+    .navLeft {
+        width: 100%;
+        padding: 24px 0;
+        text-align: center;
+    }
+
+    .navRight {
+        position: absolute;
+        width: 100%;
+        text-align: right;
+        left: 0;
+        top: 0;
+    }
+
+    #submit {
+        width: 100%;
+        text-align: center;
+    }
+
+    /* Hamburger Nav - Prefer the look of this nav from what was requested + a little bit of JavaScript needed for this :) */
+    .topnav a {
+        display: none;
+        color: #dddddd;
+        font-size: 16px;
+    }
+
+    .topnav a.icon {
+        float: right;
+        text-align: right;
+        display: block;
+        width: 17px;
+        background-color: transparent;
+    }
+
+    .topnav.responsive {
+        position: relative;
+        padding-top: 73px;
+    }
+
+    .topnav.responsive .icon {
+        position: absolute;
+        right: 0;
+        top: 0;
+        text-align: right;
+        /* Hamburger Icon size fix */
+        background-color: transparent;
+        width: 17px;
+        border-bottom-color: transparent;
+        /* Hamburger Icon size fix */
+    }
+
+    /* Hamburger Icon on Hover fix */
+    .topnav.responsive .icon:hover {
+        background-color: transparent;
+    }
+    /* Hamburger Icon on Hover fix */
+
+    .topnav.responsive a {
+        float: none;
+        display: block;
+        text-align: center;
+        color: #dddddd;
+        background-color:rgba(31, 31, 31, 0.9);
+        border-bottom: 2px solid #dddddd;
+        border-top: 2px solid #dddddd;
+    }
+
+    .topnav.responsive a:hover {
+        color: #CCAE1D;
+        background-color:rgba(0, 0, 0, 0.9);
+    }
+
+    .topnav.responsive a.active {
+        color: #0AE5DF;
+        background-color:rgba(0, 0, 0, 0.9);
+    }
+
+    .topnav {
+        min-width: 100%;
+        float: right;
+        background-color: transparent;     
+    }
+    /* Hamburger Nav End */
+
+}
+
+/*---------- Media Queries End ----------*/
+
