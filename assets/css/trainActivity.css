@@ -172,7 +172,7 @@ You could also use a data-* attribute and content for this. That way "bloats" th
     td:nth-of-type(3):before { content: "Frequency (min)"; }
     td:nth-of-type(4):before { content: "Next Arrival"; }
     td:nth-of-type(5):before { content: "Minutes Away"; }
-    td:nth-of-type(6):before { content: "Delete"; }
+    
 
     .leftContainer {
         float: none;
@@ -198,59 +198,45 @@ You could also use a data-* attribute and content for this. That way "bloats" th
 /*------- Firebase Logout -------*/
 
 #logoutContainer {
+    float:right;
     position:relative;
     display: none;
-    overflow: hidden;
     font-size:12px;
 }
 
 #userName {
     float:left;
     position:relative;
-    font-weight:bold; 
-    text-shadow:1px 1px #fff; 
-    padding:9px;
-}
-
-#logoutButton { 
-    float:right;
-    position:relative;
-    /* top:0px;
-    right:0px; */
-    cursor:pointer;
-    text-decoration: none;
-}
-
-
-#logoutButton span {
-    color:#777777; 
-    font-size:14px; 
-    font-weight:bold; 
-    text-shadow:1px 1px #fff; 
-    padding:7px 29px 9px 0px;
-    background:url(../images/loginArrow.png) no-repeat 53px 7px;
-    display:block;
-    
+    font-weight:bold;
+    font-size:12px;
+    padding-top: 2px;
 }
 
 #logoutButton:hover span{
-
     color:#333333;
 }
 
 /*------- Firebase Logout End -------*/
 
+
 /*------- Firebase Login / Register -------*/
+
+#wrapper {
+    display: block;
+    height: 22px;
+}
+
 #container {
-    max-width: 200px;
+    display: block;
+    width: 120px;
     float: right;
+    height: 100%;
 }
 
 #loginContainer {
     float: left;
     position:relative;
     display: block;
-    /* overflow: hidden; */
     font-size:12px;
 }
 
@@ -258,28 +244,23 @@ You could also use a data-* attribute and content for this. That way "bloats" th
     float: right;
     position:relative;
     display: block;
-    /* overflow: hidden; */
     font-size:12px;
 }
 
 /* Login Button */
-#loginButton, #registerButton { 
+#loginButton, #registerButton, #logoutButton { 
     float:right;
     position: relative;;
-    /* top:0px;
-    right:0px; */
     cursor:pointer;
-    /* overflow: hidden; */
+    text-decoration: none;
 }
 
 /* Login Button Text */
-#loginButton span, #registerButton span {
+#loginButton span, #registerButton span, #logoutButton span {
     color:#777777;
     font-size:14px; 
     font-weight:bold; 
     text-shadow:1px 1px #fff;
-    padding:7px 29px 9px 10px;
-    background:url(../images/loginArrow.png) no-repeat 53px 7px;
     display:block;
 }
 

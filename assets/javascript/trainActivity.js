@@ -1,6 +1,9 @@
 // To be able to easily modify root directory
 var path = "./assets/";
 
+// scheduleArray used to update Next Arrival and Minutes Away dynamically
+var scheduleArray = [];
+
 // Initialize Firebase
  var config = {
     apiKey: "AIzaSyAdorwOwzgvLTeAYa7D0MMz6FNs-e8V1Oo",
@@ -40,54 +43,71 @@ $("#addTrain").on("click", function(event) {
 
 });
 
+// Time calculattions
+function timeCalcualtions(startTime, frequency) {
+
+    var startTime = moment(startTime, "HH:mm");
+    var minutesFromStartTime = moment().diff(moment(startTime), "minutes");
+    var minutesPassed = minutesFromStartTime % frequency;
+    var minutesAway = frequency - minutesPassed;
+    var nextTrain = moment().add(minutesAway, "minutes").format("hh:mm A");
+
+    return [nextTrain, minutesAway];
+}
+
 database.ref("/Train_Activity/").on("child_added", function(childSnapshot) {
-    // $("#trainSchedule > tbody").empty();
+
     // setInterval(function(){
     var getTrainName = childSnapshot.val().trainName;
     var getTrainDestination = childSnapshot.val().trainDestination;
     var getTrainStartTime = childSnapshot.val().trainStartTime;
     var getTrainFrequency = childSnapshot.val().trainFrequency;
+    var getID = childSnapshot.val().dateAdded;
     var getKey = childSnapshot.key;
 
+    // scheduleArray used to update Next Arrival and Minutes Away dynamically
+    scheduleArray.push({getID, getTrainStartTime, getTrainFrequency});
     
+    var [nextTrain, minutesAway] = timeCalcualtions(getTrainStartTime, getTrainFrequency);
     
-    // Time calculattions
-    var startTime = moment(getTrainStartTime, "HH:mm");
-    // console.log(startTime)
-    var minutesFromStartTime = moment().diff(moment(startTime), "minutes");
-    // console.log(minutesFromStartTime);
-    var minutesPassed = minutesFromStartTime % getTrainFrequency;
-    // console.log("CT " + minutesPassed);
-    var minutesAway = getTrainFrequency - minutesPassed;
-    // console.log(minutesAway);
-    var nextTrain = moment().add(minutesAway, "minutes").format("hh:mm A");
-    // console.log(nextTrain);
-
     // Create the new row
     var newRow = $("<tr>").append(
         $("<td>").text(getTrainName),
         $("<td>").text(getTrainDestination),
         $("<td>").text(getTrainFrequency),
-        $("<td id='nextTrain'>").text(nextTrain),
-        $("<td id='minutesAway'>").text(minutesAway),
+        $("<td id='nextTrain-" + getID + "'>").text(nextTrain),
+        $("<td id='minutesAway-" + getID + "'>").text(minutesAway),
         $("<td id='admin'>").append($("<img class='removeTrain' src='" + path + "images/checkmark_remove.png' width='20px' height='20px' id = '" + getKey + "'></img>"))
     );
+    newRow.attr("id", getID);
 
     // Append the new row to the table
     $("#trainSchedule > tbody").append(newRow);
-// }, 1000);
     
 });
 
 
 $(document).on("click", ".removeTrain", function() {
-    console.log(this.id);
     database.ref("/Train_Activity/").child(this.id).remove();
+    $(this).closest('tr').remove();
 });
 
 $("#currentTime").text(moment().format("hh:mm A"));
 setInterval(function(){
+
     $("#currentTime").text(moment().format("hh:mm A"));
+
+    for (var i=0; i<scheduleArray.length; i++){
+        var currentID = scheduleArray[i].getID;
+        var currentTrainStartTime = scheduleArray[i].getTrainStartTime;
+        var currentTrainFrequency = scheduleArray[i].getTrainFrequency;
+
+        var [nextTrain, minutesAway] = timeCalcualtions(currentTrainStartTime, currentTrainFrequency);
+        
+        $("#nextTrain-" + currentID).text(nextTrain);
+        $("#minutesAway-" + currentID).text(minutesAway);
+    }
+
 }, 60000);
 
 
@@ -143,25 +163,21 @@ firebase.auth().onAuthStateChanged(function(user) {
                 $("td#admin").hide();
             }
         });
-        
+        $("#userName").show();
         $("#userName").text(email);
         $("#loginContainer").hide();
         $("#registerContainer").hide();
         $("#logoutContainer").show();
     } else {
-        // User is signed out.
+        // User is signed out.        
         $("#loginContainer").show();
         $("#registerContainer").show();
+        $("#userName").hide();
         $("#logoutContainer").hide();
         $("#admin").hide();
         $("td#admin").hide();
     }
 });
-
-
-
-
-
 
 
 
