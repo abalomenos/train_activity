@@ -127,40 +127,43 @@
                     </table>
                 </div>
                 <div class = "rightContainer">
-                    <br>
                     <div id="noAdmin">
                         <h3>Note</h3>
-                        <p>Only admins can edit Train schedules.</p>
                         <br>
-                        <p>For testing purposes, use the below credentials.</p>
-                        <br>
-                        <p>Email:</p>
-                        <p>admin@skycomtech.com</p>
-                        <br>
-                        <p>Password:</p>
-                        <p>admin1</p>
+                        <div id="noAdminContainer">
+                            <p>Only admins can edit Train schedules.</p>
+                            <br>
+                            <p>For testing purposes, use the below credentials.</p>
+                            <br>
+                            <p>Email:</p>
+                            <p>admin@skycomtech.com</p>
+                            <br>
+                            <p>Password:</p>
+                            <p>admin1</p>
+                        </div>
                     </div>
                     <div id="addTrains">
                         <h3>Add Train</h3>
+                        <br>
                         <form id="addTrainsForm">
                             <div>
                                 <label for="trainName">Train Name</label>
-                                <input type="text" id="trainName">
+                                <input type="text" name="trainName" id="trainName">
                             </div>
                             <br>
                             <div>
                                 <label for="trainDestination">Destination</label>
-                                <input type="text" id="trainDestination">
+                                <input type="text" name="trainDestination" id="trainDestination">
                             </div>
                             <br>
                             <div>
                                 <label for="trainFirstTime">Start Time</label>
-                                <input type="text" id="trainFirstTime" required placeholder="(HH:mm) military time" onkeyup="myFunction()">
+                                <input type="text" name="trainFirstTime" id="trainFirstTime" required placeholder="(HH:mm)">
                             </div>
                             <br>
                             <div>
                                 <label for="trainFrequency">Frequency</label>
-                                <input type="text" id="trainFrequency" placeholder="(min)">
+                                <input type="text" name="trainFrequency" id="trainFrequency" placeholder="(min)">
                             </div>
                             <br>
                             <div class="buttonContainer">
@@ -168,6 +171,12 @@
                             </div>
                         </form>
                     </div>
+                </div>
+                <div id="messageBox">
+                    <p>Check your Start Time input!</p>
+                    <p>Needs to be (hh:mm)</p>
+                    <br>
+                    <p>Example: 05:00</p>
                 </div>
             </div>
         </div>

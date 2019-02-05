@@ -18,6 +18,11 @@
     display: table;
 }
 
+#wrapper {
+    display: block;
+    height: 25px;
+}
+
 .gameContainer {
     font-family: "Open Sans", sans-serif;
     font-size: 14px;
@@ -31,7 +36,6 @@
     margin: 2px auto;
     text-align: left;
     max-width: 680px;
-    
 }
 
 .rightContainer {
@@ -39,7 +43,11 @@
     margin: 2px auto;
     text-align: left;
     max-width: 200px;
-    padding-top: 10px;
+}
+
+#addTrainsForm, #noAdminContainer {
+    padding: 10px;
+    border: 1px solid #dddddd;
 }
 
 .editHighlight {
@@ -243,12 +251,6 @@ table th:nth-child(1n+3), table td:nth-child(1n+3) {
 
 /*------- Firebase Login / Register -------*/
 
-
-#wrapper {
-    display: block;
-    height: 22px;
-}
-
 /*--- Logout ---*/
 
 #logoutContainer {
@@ -269,7 +271,6 @@ table th:nth-child(1n+3), table td:nth-child(1n+3) {
 #logoutButton:hover span{
     color:#333333;
 }
-
 
 /*--- Login / Register ---*/
 
@@ -390,3 +391,25 @@ input:focus {
 
 /*------- Firebase Login / Register End -------*/
 
+
+
+
+#messageBox {
+    position: fixed;
+    padding: 10px;
+    background: #cccccc;
+    color: red;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    border:1px solid #222222;
+    border-radius:10px;
+    -moz-border-radius:10px;
+    transform: translate(-50%, -50%);
+    /* for IE */
+    box-shadow: 0 0 0 1000px rgba(0,0,0,.8);
+    /* for all other browsers */
+    box-shadow: 0 0 0 100vmax rgba(0,0,0,.8);
+    display:none;
+    z-index:1;
+}

@@ -11,6 +11,7 @@ window.onload = function() {
     $(".adminEdit").hide();
     $(".adminDelete").hide();
     $(".adminSave").hide();
+    $("#messageBox").hide();
 }
 
 // Initialize Firebase
@@ -31,33 +32,36 @@ var database = firebase.database();
 $("#addTrain").on("click", function(event) {
     event.preventDefault();
 
-    
-    var setTrainName = $("#trainName").val().trim();
-    var setTrainDestination = $("#trainDestination").val().trim();
-    var setTrainStartTime = $("#trainFirstTime").val().trim();
-    var setTrainFrequency = $("#trainFrequency").val().trim();
+    if($("#addTrainsForm").valid()) {
+        var setTrainName = $("#trainName").val().trim();
+        var setTrainDestination = $("#trainDestination").val().trim();
+        var setTrainStartTime = $("#trainFirstTime").val().trim();
+        var setTrainFrequency = $("#trainFrequency").val().trim();
 
-    // Confirm Start time is in Time format
-    var testTrainStartTime = moment(setTrainStartTime, "HH:mm", true).isValid();
+        // Confirm Start time is in Time format
+        var testTrainStartTime = moment(setTrainStartTime, "HH:mm", true).isValid();
 
-    if ( testTrainStartTime ) {
-        database.ref("/Train_Activity/").push({
-            trainName: setTrainName,
-            trainDestination: setTrainDestination,
-            trainStartTime: setTrainStartTime,
-            trainFrequency: setTrainFrequency,
-            dateAdded: firebase.database.ServerValue.TIMESTAMP
-        });
+        if ( testTrainStartTime ) {
+            database.ref("/Train_Activity/").push({
+                trainName: setTrainName,
+                trainDestination: setTrainDestination,
+                trainStartTime: setTrainStartTime,
+                trainFrequency: setTrainFrequency,
+                dateAdded: firebase.database.ServerValue.TIMESTAMP
+            });
 
-        // Clears all of the text-boxes
-        $("#trainName").val("");
-        $("#trainDestination").val("");
-        $("#trainFirstTime").val("");
-        $("#trainFrequency").val("");
-    } else {
-        console.log("Incorrect time");
+            // Clears all of the text-boxes
+            $("#trainName").val("");
+            $("#trainDestination").val("");
+            $("#trainFirstTime").val("");
+            $("#trainFrequency").val("");
+        } else {
+            $("#messageBox").show();
+            setTimeout(function(){ 
+                $("#messageBox").hide();
+            }, 3000);
+        }
     }
-
 });
 
 // Time calculattions
@@ -157,31 +161,11 @@ $(document).on("click", ".editTrain", function(event)
 
 
 // Save Edited Train
-$(document).on("click", ".saveTrain", function(event) 
-{
+$(document).on("click", ".saveTrain", function(event) {
     event.preventDefault();
 
     var currentID = this.id.split("save")[1];
-    console.log("Second " + currentID);
 
-    $("#editTD" + currentID).show();
-    $("#saveTD" + currentID).hide();
-    
-
-    $("#trainName" + currentID).attr("contenteditable", "false");
-    $("#trainName" + currentID).removeClass("editHighlight");
-
-
-    $("#trainDestination" + currentID).attr("contenteditable", "false");
-    $("#trainDestination" + currentID).removeClass("editHighlight");
-
-    $("#trainStartTime" + currentID).attr("contenteditable", "false");
-    $("#trainStartTime" + currentID).removeClass("editHighlight");
-
-    $("#trainFrequency" + currentID).attr("contenteditable", "false");
-    $("#trainFrequency" + currentID).removeClass("editHighlight");
- 
-    
     var setTrainName = $("#trainName" + currentID).text().trim();
     var setTrainDestination = $("#trainDestination" + currentID).text().trim();
     var setTrainStartTime = $("#trainStartTime" + currentID).text().trim();
@@ -191,6 +175,23 @@ $(document).on("click", ".saveTrain", function(event)
     var testTrainStartTime = moment(setTrainStartTime, "HH:mm", true).isValid();
 
     if ( testTrainStartTime ) {
+
+        $("#editTD" + currentID).show();
+        $("#saveTD" + currentID).hide();
+        
+
+        $("#trainName" + currentID).attr("contenteditable", "false");
+        $("#trainName" + currentID).removeClass("editHighlight");
+
+
+        $("#trainDestination" + currentID).attr("contenteditable", "false");
+        $("#trainDestination" + currentID).removeClass("editHighlight");
+
+        $("#trainStartTime" + currentID).attr("contenteditable", "false");
+        $("#trainStartTime" + currentID).removeClass("editHighlight");
+
+        $("#trainFrequency" + currentID).attr("contenteditable", "false");
+        $("#trainFrequency" + currentID).removeClass("editHighlight");
 
         var [nextTrain, minutesAway] = timeCalcualtions(setTrainStartTime, setTrainFrequency);
 
@@ -215,7 +216,10 @@ $(document).on("click", ".saveTrain", function(event)
             dateAdded: firebase.database.ServerValue.TIMESTAMP
         });
     } else {
-        console.log("Incorrect time");
+        $("#messageBox").show();
+        setTimeout(function(){ 
+            $("#messageBox").hide();
+        }, 3000);
     }
 })
 
@@ -285,17 +289,51 @@ $("#registerForm").validate({
     },
     messages:{
         emailRegister: {
-            required:"Your email is required"
+            required: "Your email is required!"
         },
         passwordRegister: { 
-            required:"A password is required"
+            required: "A password is required!"
         },
         cfmPasswordRegister: {
-            required:"Please confirm your password"
+            required: "Please confirm your password!"
         }
     }
     
 });
+
+
+$("#addTrainsForm").validate({
+    rules: {
+        trainName: {
+            required: true
+        },
+        trainDestination: {
+            required: true
+        },
+        trainFirstTime: {
+            required: true
+        },
+        trainFrequency: {
+            required: true,
+            number: true
+        }
+    },
+    messages:{
+        trainName: {
+            required: "Train name is required!"
+        },
+        trainDestination: {
+            required: "Train destination is required!"
+        },
+        trainFirstTime: {
+            required: "Time is required!"
+        },
+        trainFrequency: {
+            required: "Frequency is required!",
+            number: "Needs to be a number!"
+        }
+    }
+})
 
 
 // Logout
