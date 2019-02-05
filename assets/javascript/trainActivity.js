@@ -179,8 +179,8 @@ database.ref("/Train_Activity/").on("child_added", function(childSnapshot) {
         $("<td data-label='DESTINATION' id='trainDestination" + getKey + "'>").text(getTrainDestination),
         $("<td data-label='START TIME' class='adminStartTime' id='trainStartTime" + getKey + "'>").text(getTrainStartTime),
         $("<td data-label='FREQUENCY (MIN)' id='trainFrequency" + getKey + "'>").text(getTrainFrequency),
-        $("<td data-label='NEXT ARRIVAL' id='nextTrain" + getKey + "'>").text(nextTrain),
-        $("<td data-label='MINUTES AWAY' id='minutesAway" + getKey + "'>").text(minutesAway),
+        $("<td data-label='NEXT ARRIVAL' class='animation' id='nextTrain" + getKey + "'>").text(nextTrain),
+        $("<td data-label='MINUTES AWAY' class='animation' id='minutesAway" + getKey + "'>").text(minutesAway),
         $("<td data-label='EDIT' class='adminEdit' id='editTD" + getKey + "'>").append($("<img class='editTrain' src='" + path + "images/edit.png' width='30px' height='30px' id='edit" + getKey + "'></img>")),
         $("<td data-label='EDIT' class='adminSave' id='saveTD" + getKey + "'>").append($("<img class='saveTrain' src='" + path + "images/save.png' width='30px' height='30px' id='save" + getKey + "'></img>")),
         $("<td data-label='DELETE' class='adminDelete' id='deleteTD" + getKey + "'>").append($("<img class='removeTrain' src='" + path + "images/checkmark_remove.png' width='30px' height='30px' id='delete" + getKey + "'></img>"))
@@ -350,6 +350,9 @@ setInterval(function(){
 
     $("#currentTime").text(moment().format("hh:mm A"));
 
+    $("#currentTime").addClass("animated flash slow");
+    $(".animation").addClass("animated flash slow");
+
     for (var i=0; i<scheduleArray.length; i++){
         var currentID = scheduleArray[i].getKey;
         var currentTrainStartTime = scheduleArray[i].getTrainStartTime;
@@ -361,6 +364,11 @@ setInterval(function(){
         $("#nextTrain" + currentID).text(nextTrain);
         $("#minutesAway" + currentID).text(minutesAway);
     }
+
+    setTimeout(function(){ 
+        $("#currentTime").removeClass("animated flash slow");
+        $(".animation").removeClass("animated flash slow");
+     }, 3000);
 
 }, 60000);
 
