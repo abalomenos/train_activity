@@ -388,9 +388,8 @@ input:focus {
 /*------- Firebase Login / Register End -------*/
 
 
-
-/* Message Box for Error of Start Time  */
-#messageBox {
+/* Message Box for Error of Start Time & Login Error  */
+#messageBox, #errorLogin {
     position: fixed;
     padding: 10px;
     background: #cccccc;
@@ -410,23 +409,3 @@ input:focus {
     z-index:1;
 }
 
-/* Message Box for Login Error */
-#errorLogin {
-    position: fixed;
-    padding: 10px;
-    background: #cccccc;
-    color: red;
-    text-align: center;
-    top: 50%;
-    left: 50%;
-    border:1px solid #222222;
-    border-radius:10px;
-    -moz-border-radius:10px;
-    transform: translate(-50%, -50%);
-    /* for IE */
-    box-shadow: 0 0 0 1000px rgba(0,0,0,.8);
-    /* for all other browsers */
-    box-shadow: 0 0 0 100vmax rgba(0,0,0,.8);
-    display:none;
-    z-index:1;
-}
