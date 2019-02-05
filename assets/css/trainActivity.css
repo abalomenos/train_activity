@@ -354,7 +354,7 @@ table th:nth-child(1n+3), table td:nth-child(1n+3) {
     display:block;
 }
 
-fieldset#body {
+fieldset.body {
     background:#fff;
     border-radius:3px;
     -moz-border-radius:3px;
@@ -362,12 +362,12 @@ fieldset#body {
     margin:0;
 }
 
-#body label {
+.body label {
     display:block;
     float:left;
 }
 
-#loginForm #body fieldset label, #registerForm #body fieldset label {
+#loginForm .body fieldset label, #registerForm .body fieldset label {
     display:block;
     float:none;
     margin:0 0 6px 0;
