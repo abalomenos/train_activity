@@ -12,6 +12,7 @@ window.onload = function() {
     $(".adminDelete").hide();
     $(".adminSave").hide();
     $("#messageBox").hide();
+    $("#errorLogin").hide();
 }
 
 // Initialize Firebase
@@ -253,7 +254,10 @@ $("#login").on("click", function(event) {
     var email = $("#email").val().trim();
     var password = $("#password").val().trim();
     firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
-        console.log(error);
+        $("#errorLogin").show();
+        setTimeout(function(){ 
+            $("#errorLogin").hide();
+        }, 2000);
     });
 });
 
@@ -323,7 +327,7 @@ $("#addTrainsForm").validate({
             required: "Train name is required!"
         },
         trainDestination: {
-            required: "Train destination is required!"
+            required: "Destination is required!"
         },
         trainFirstTime: {
             required: "Time is required!"

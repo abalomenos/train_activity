@@ -69,6 +69,7 @@
 
 .buttonContainer {
     text-align: center;
+    margin-top: 12px;
 }
 
 #addTrains {
@@ -320,10 +321,6 @@ table th:nth-child(1n+3), table td:nth-child(1n+3) {
     color:#333333;
 }
 
-#loginButton.active span, #registerButton.active span {
-    background-position:53px -76px;
-}
-
 /* Login Box */
 #loginBox, #registerBox {
     position: fixed;
@@ -344,57 +341,77 @@ table th:nth-child(1n+3), table td:nth-child(1n+3) {
     border:1px solid #222222;
     border-radius:3px 0 3px 3px;
     -moz-border-radius:3px 0 3px 3px;
-    margin-top:-1px;
     background:#888888;
     padding:6px;
 }
 
 #loginForm fieldset, #registerForm fieldset {
-    margin:0 0 12px 0;
-    display:block;
+    margin: 2px;
+    display: block;
 }
 
 fieldset.body {
-    background:#fff;
-    border-radius:3px;
-    -moz-border-radius:3px;
-    padding:10px 13px;
-    margin:0;
+    background: #ffffff;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    padding: 10px 13px;
+    margin: 0;
 }
 
 .body label {
-    display:block;
-    float:left;
+    display: block;
+    float: left;
 }
 
 #loginForm .body fieldset label, #registerForm .body fieldset label {
-    display:block;
-    float:none;
-    margin:0 0 6px 0;
+    display: block;
+    float: none;
+    margin: 5px;
 }
 
 /* Default Input */
 #loginForm, #registerForm {
     width: 100%;
-    font-weight:bold;
+    font-weight: bold;
 }
 
 /* Sign In / Register Button */
 #loginForm #login, #registerForm #register {
-    width:auto;
+    width: auto;
     text-align: center;
 }
 
 input:focus {
-    outline:none;
+    outline: none;
 }
 
 /*------- Firebase Login / Register End -------*/
 
 
 
-
+/* Message Box for Error of Start Time  */
 #messageBox {
+    position: fixed;
+    padding: 10px;
+    background: #cccccc;
+    color: red;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    border:1px solid #222222;
+    border-radius:10px;
+    -moz-border-radius:10px;
+    transform: translate(-50%, -50%);
+    /* for IE */
+    box-shadow: 0 0 0 1000px rgba(0,0,0,.8);
+    /* for all other browsers */
+    box-shadow: 0 0 0 100vmax rgba(0,0,0,.8);
+    display:none;
+    z-index:1;
+}
+
+/* Message Box for Login Error */
+#errorLogin {
     position: fixed;
     padding: 10px;
     background: #cccccc;
