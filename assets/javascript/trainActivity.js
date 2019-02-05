@@ -4,6 +4,15 @@ var path = "./assets/";
 // scheduleArray used to update Next Arrival and Minutes Away dynamically
 var scheduleArray = [];
 
+
+
+window.onload = function() {
+    $(".adminStartTime").hide();
+    $(".adminEdit").hide();
+    $(".adminDelete").hide();
+    $(".adminSave").hide();
+}
+
 // Initialize Firebase
  var config = {
     apiKey: "AIzaSyAdorwOwzgvLTeAYa7D0MMz6FNs-e8V1Oo",
@@ -18,14 +27,20 @@ firebase.initializeApp(config);
 
 var database = firebase.database();
 
+// Add Train
 $("#addTrain").on("click", function(event) {
     event.preventDefault();
-    if ( event.target.validity.valid ) {
-        var setTrainName = $("#trainName").val().trim();
-        var setTrainDestination = $("#trainDestination").val().trim();
-        var setTrainStartTime = $("#trainFirstTime").val().trim();
-        var setTrainFrequency = $("#trainFrequency").val().trim();
 
+    
+    var setTrainName = $("#trainName").val().trim();
+    var setTrainDestination = $("#trainDestination").val().trim();
+    var setTrainStartTime = $("#trainFirstTime").val().trim();
+    var setTrainFrequency = $("#trainFrequency").val().trim();
+
+    // Confirm Start time is in Time format
+    var testTrainStartTime = moment(setTrainStartTime, "HH:mm", true).isValid();
+
+    if ( testTrainStartTime ) {
         database.ref("/Train_Activity/").push({
             trainName: setTrainName,
             trainDestination: setTrainDestination,
@@ -39,6 +54,8 @@ $("#addTrain").on("click", function(event) {
         $("#trainDestination").val("");
         $("#trainFirstTime").val("");
         $("#trainFrequency").val("");
+    } else {
+        console.log("Incorrect time");
     }
 
 });
@@ -62,50 +79,163 @@ database.ref("/Train_Activity/").on("child_added", function(childSnapshot) {
     var getTrainDestination = childSnapshot.val().trainDestination;
     var getTrainStartTime = childSnapshot.val().trainStartTime;
     var getTrainFrequency = childSnapshot.val().trainFrequency;
-    var getID = childSnapshot.val().dateAdded;
     var getKey = childSnapshot.key;
 
     // scheduleArray used to update Next Arrival and Minutes Away dynamically
-    scheduleArray.push({getID, getTrainStartTime, getTrainFrequency});
+    scheduleArray.push({getKey, getTrainStartTime, getTrainFrequency});
+    console.log(scheduleArray);
     
     var [nextTrain, minutesAway] = timeCalcualtions(getTrainStartTime, getTrainFrequency);
     
     // Create the new row
     var newRow = $("<tr>").append(
-        $("<td>").text(getTrainName),
-        $("<td>").text(getTrainDestination),
-        $("<td>").text(getTrainFrequency),
-        $("<td id='nextTrain-" + getID + "'>").text(nextTrain),
-        $("<td id='minutesAway-" + getID + "'>").text(minutesAway),
-        $("<td id='admin'>").append($("<img class='removeTrain' src='" + path + "images/checkmark_remove.png' width='20px' height='20px' id = '" + getKey + "'></img>"))
+        $("<td data-label='TRAIN NAME' id='trainName" + getKey + "'>").text(getTrainName),
+        $("<td data-label='DESTINATION' id='trainDestination" + getKey + "'>").text(getTrainDestination),
+        $("<td data-label='START TIME' class='adminStartTime' id='trainStartTime" + getKey + "'>").text(getTrainStartTime),
+        $("<td data-label='FREQUENCY (MIN)' id='trainFrequency" + getKey + "'>").text(getTrainFrequency),
+        $("<td data-label='NEXT ARRIVAL' id='nextTrain" + getKey + "'>").text(nextTrain),
+        $("<td data-label='MINUTES AWAY' id='minutesAway" + getKey + "'>").text(minutesAway),
+        $("<td data-label='EDIT' class='adminEdit' id='editTD" + getKey + "'>").append($("<img class='editTrain' src='" + path + "images/edit.png' width='30px' height='30px' id='edit" + getKey + "'></img>")),
+        $("<td data-label='EDIT' class='adminSave' id='saveTD" + getKey + "'>").append($("<img class='saveTrain' src='" + path + "images/save.png' width='30px' height='30px' id='save" + getKey + "'></img>")),
+        $("<td data-label='DELETE' class='adminDelete' id='deleteTD" + getKey + "'>").append($("<img class='removeTrain' src='" + path + "images/checkmark_remove.png' width='30px' height='30px' id='delete" + getKey + "'></img>"))
+        
     );
-    newRow.attr("id", getID);
+    newRow.attr("id", getKey);
 
     // Append the new row to the table
     $("#trainSchedule > tbody").append(newRow);
+
+    $(".adminStartTime").hide();
+    $(".adminEdit").hide();
+    $(".adminDelete").hide();
+    $(".adminSave").hide();
     
 });
 
+// Delete Train
+$(document).on("click", ".removeTrain", function(event) {
 
-$(document).on("click", ".removeTrain", function() {
-    database.ref("/Train_Activity/").child(this.id).remove();
+    event.preventDefault();
+
+    var currentID = this.id.split("delete")[1];
+
+    database.ref("/Train_Activity/").child(currentID).remove();
     $(this).closest('tr').remove();
 });
 
+
+// Edit Train
+$(document).on("click", ".editTrain", function(event) 
+{
+    event.preventDefault();
+
+    var currentID = this.id.split("edit")[1];
+    console.log("First " + currentID);
+
+    $("#editTD" + currentID).hide();
+    $("#saveTD" + currentID).show();
+    
+
+    $("#trainName" + currentID).attr("contenteditable", "true");
+    $("#trainName" + currentID).addClass("editHighlight");
+    $("#trainName" + currentID).focus();
+
+
+    $("#trainDestination" + currentID).attr("contenteditable", "true");
+    $("#trainDestination" + currentID).addClass("editHighlight");
+
+    $("#trainStartTime" + currentID).attr("contenteditable", "true");
+    $("#trainStartTime" + currentID).addClass("editHighlight");
+
+    $("#trainFrequency" + currentID).attr("contenteditable", "true");
+    $("#trainFrequency" + currentID).addClass("editHighlight");
+
+    
+    
+    
+})
+
+
+// Save Edited Train
+$(document).on("click", ".saveTrain", function(event) 
+{
+    event.preventDefault();
+
+    var currentID = this.id.split("save")[1];
+    console.log("Second " + currentID);
+
+    $("#editTD" + currentID).show();
+    $("#saveTD" + currentID).hide();
+    
+
+    $("#trainName" + currentID).attr("contenteditable", "false");
+    $("#trainName" + currentID).removeClass("editHighlight");
+
+
+    $("#trainDestination" + currentID).attr("contenteditable", "false");
+    $("#trainDestination" + currentID).removeClass("editHighlight");
+
+    $("#trainStartTime" + currentID).attr("contenteditable", "false");
+    $("#trainStartTime" + currentID).removeClass("editHighlight");
+
+    $("#trainFrequency" + currentID).attr("contenteditable", "false");
+    $("#trainFrequency" + currentID).removeClass("editHighlight");
+ 
+    
+    var setTrainName = $("#trainName" + currentID).text().trim();
+    var setTrainDestination = $("#trainDestination" + currentID).text().trim();
+    var setTrainStartTime = $("#trainStartTime" + currentID).text().trim();
+    var setTrainFrequency = $("#trainFrequency" + currentID).text().trim();
+
+    // Confirm Start time is in Time format
+    var testTrainStartTime = moment(setTrainStartTime, "HH:mm", true).isValid();
+
+    if ( testTrainStartTime ) {
+
+        var [nextTrain, minutesAway] = timeCalcualtions(setTrainStartTime, setTrainFrequency);
+
+        $("#nextTrain" + currentID).text(nextTrain);
+        $("#minutesAway" + currentID).text(minutesAway);
+
+        for (var i=0; i<scheduleArray.length; i++) {
+            if (scheduleArray[i]["getKey"] == currentID) {
+                arrayID = i;
+            }
+        }
+        scheduleArray[arrayID]["getTrainFrequency"] = setTrainFrequency;
+        scheduleArray[arrayID]["getTrainStartTime"] = setTrainStartTime;
+
+        console.log("Array: "+ arrayID);
+
+        database.ref("/Train_Activity/" + currentID).set({
+            trainName: setTrainName,
+            trainDestination: setTrainDestination,
+            trainStartTime: setTrainStartTime,
+            trainFrequency: setTrainFrequency,
+            dateAdded: firebase.database.ServerValue.TIMESTAMP
+        });
+    } else {
+        console.log("Incorrect time");
+    }
+})
+
+
+
+// Update Time, Next Arrival and Minutes Away
 $("#currentTime").text(moment().format("hh:mm A"));
 setInterval(function(){
 
     $("#currentTime").text(moment().format("hh:mm A"));
 
     for (var i=0; i<scheduleArray.length; i++){
-        var currentID = scheduleArray[i].getID;
+        var currentID = scheduleArray[i].getKey;
         var currentTrainStartTime = scheduleArray[i].getTrainStartTime;
         var currentTrainFrequency = scheduleArray[i].getTrainFrequency;
 
         var [nextTrain, minutesAway] = timeCalcualtions(currentTrainStartTime, currentTrainFrequency);
         
-        $("#nextTrain-" + currentID).text(nextTrain);
-        $("#minutesAway-" + currentID).text(minutesAway);
+        $("#nextTrain" + currentID).text(nextTrain);
+        $("#minutesAway" + currentID).text(minutesAway);
     }
 
 }, 60000);
@@ -126,12 +256,47 @@ $("#login").on("click", function(event) {
 // Register
 $("#register").on("click", function(event) {
     event.preventDefault();
-    var email = $("#emailRegister").val().trim();
-    var password = $("#passwordRegister").val().trim();
-    firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
-        console.log(error);
-      });
+    if($("#registerForm").valid()) {
+        var email = $("#emailRegister").val().trim();
+        var password = $("#passwordRegister").val().trim();
+        firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+            console.log(error);
+        });
+    }
 });
+
+$("#registerForm").validate({
+    rules: {
+        emailRegister: {
+            required: true,
+            email: true
+        },
+        passwordRegister: { 
+            required: true,
+            minlength: 6,
+            maxlength: 10,
+        }, 
+        cfmPasswordRegister: {
+            required: true,
+            equalTo: "#passwordRegister",
+            minlength: 6,
+            maxlength: 10
+        }
+    },
+    messages:{
+        emailRegister: {
+            required:"Your email is required"
+        },
+        passwordRegister: { 
+            required:"A password is required"
+        },
+        cfmPasswordRegister: {
+            required:"Please confirm your password"
+        }
+    }
+    
+});
+
 
 // Logout
 $("#logoutButton").on("click", function(event) {
@@ -145,37 +310,56 @@ $("#logoutButton").on("click", function(event) {
 
 // Get current User
 firebase.auth().onAuthStateChanged(function(user) {
+    
+    // User is signed in
     if (user) {
-        // User is signed in
         var email = user.email;
         var uid = user.uid;            
-        database.ref("/").on("value", function(snapshot) {
-            var getUID =  snapshot.child("admin/uid").val();
-            if (uid == getUID) {
-                console.log("Admin logged in");
-                $("#addTrains").show();
-                $("#admin").show();
-                $("td#admin").show();
-            } else {
-                console.log("Not admin");
-                $("#addTrains").hide();
-                $("#admin").hide();
-                $("td#admin").hide();
-            }
-        });
-        $("#userName").show();
+        
+
         $("#userName").text(email);
+        
+        $("#userName").show();        
+        $("#logoutContainer").show();
+        
         $("#loginContainer").hide();
         $("#registerContainer").hide();
-        $("#logoutContainer").show();
-    } else {
-        // User is signed out.        
+
+        // Check if User is Admin
+        database.ref("/").on("value", function(snapshot) {
+            var getUID =  snapshot.child("admin/uid").val();
+            
+            // Admin logged in
+            if (uid == getUID) {
+                
+                $("#addTrains").show();
+                $(".adminStartTime").show();
+                $(".adminEdit").show();
+                $(".adminDelete").show();
+
+                $("#noAdmin").hide();
+                
+            } else { // User is not Admin
+                
+                $("#noAdmin").show();
+
+                $("#addTrains").hide();
+                $(".adminStartTime").hide();
+                $(".adminEdit").hide();
+                $(".adminDelete").hide();
+            }
+        });        
+    } else { // User is signed out.
+
+        $("#noAdmin").show();
         $("#loginContainer").show();
         $("#registerContainer").show();
+        
         $("#userName").hide();
         $("#logoutContainer").hide();
-        $("#admin").hide();
-        $("td#admin").hide();
+        $(".adminStartTime").hide();
+        $(".adminEdit").hide();
+        $(".adminDelete").hide();
     }
 });
 
@@ -187,7 +371,7 @@ $(function() {
     var box = $('#loginBox');
     var form = $('#loginForm');
     button.removeAttr('href');
-    button.mouseup(function(login) {
+    button.mouseup(function() {
         box.toggle();
         button.toggleClass('active');
     });
@@ -209,7 +393,7 @@ $(function() {
     var box = $('#registerBox');
     var form = $('#registerForm');
     button.removeAttr('href');
-    button.mouseup(function(login) {
+    button.mouseup(function() {
         box.toggle();
         button.toggleClass('active');
     });
@@ -224,42 +408,3 @@ $(function() {
     });
 });
 
-
-//     $.validator.addMethod(
-//         "regex",
-//         function(value, element, regexp) {
-//             var re = new RegExp(regexp);
-//             return this.optional(element) || re.test(value);
-//         },
-//         "Please check your input."
-// );
-// $("#trainFirstTime").rules("add", { regex: "^[a-zA-Z'.\\s]{1,40}$" })
-
-// $.validator.addMethod("regx", function(value, element, regexpr) {          
-//     return regexpr.test(value);
-// }, "Please enter a valid pasword.");
-
-// $("#addTrainsForm").validate({
-
-//     rules: {
-//         trainFirstTime: {
-//             required: true ,
-//             //change regexp to suit your needs
-//             regx: ([01]?[0-9]|2[0-3]):[0-5][0-9]
-//             // minlength: 5,
-//             // maxlength: 8
-//         }
-//     }
-// });
-
-
-// function myFunction() {
-//     // $('span.error-keyup-4').remove();
-//     var inputVal = $("#trainFirstTime").val();
-//     console.log(inputVal);
-    
-//     var characterReg = ([01]?[0-9]|2[0-3]):[0-5][0-9];
-//     // if(!characterReg.test(inputVal)) {
-//     //     $(this).after('<span class="error error-keyup-4">Format xxx-xxx-xxxx</span>');
-//     // }
-// }

@@ -58,15 +58,16 @@
                                     <fieldset id="body">
                                         <fieldset>
                                             <label for="email">Email Address</label>
-                                            <input type="text" name="email" id="email" />
+                                            <input type="text" name="email" id="email"/>
                                         </fieldset>
                                         <fieldset>
                                             <label for="password">Password</label>
-                                            <input type="password" name="password" id="password" />
+                                            <input type="password" name="password" id="password"/>
                                         </fieldset>
-                                        <input type="submit" id="login" value="Sign in" />
+                                        <div class="buttonContainer">
+                                            <input type="submit" class="button" id="login" value="Sign in"/>
+                                        </div>
                                     </fieldset>
-                                    <span><a href="#">Forgot your password?</a></span>
                                 </form>
                             </div>
                         </div>
@@ -78,13 +79,19 @@
                                     <fieldset id="body">
                                         <fieldset>
                                             <label for="emailRegister">Email Address</label>
-                                            <input type="text" name="emailRegister" id="emailRegister" />
+                                            <input type="text" name="emailRegister" id="emailRegister"/>
                                         </fieldset>
                                         <fieldset>
                                             <label for="passwordRegister">Password</label>
-                                            <input type="password" name="passwordRegister" id="passwordRegister" />
+                                            <input type="password" class="form-control" name="passwordRegister" id="passwordRegister"/>
                                         </fieldset>
-                                        <input type="submit" id="register" value="Register" />
+                                        <fieldset>
+                                            <label for="cfmPasswordRegister">Confirm Password</label>
+                                            <input type="password" class="form-control" name="cfmPasswordRegister" id="cfmPasswordRegister"/>
+                                            </fieldset>
+                                        <div class="buttonContainer">
+                                            <input type="submit" class="button" id="register" value="Register"/>
+                                        </div>
                                     </fieldset>
                                 </form>
                             </div>
@@ -105,19 +112,34 @@
                     <table id="trainSchedule">
                         <thead>
                             <tr>
-                                <th>Train Name</th>
-                                <th>Destination</th>
-                                <th>Frequency (min)</th>
-                                <th>Next Arrival</th>
-                                <th>Minutes Away</th>
-                                <th id="admin">Delete</th>
+                                <th scope="col">TRAIN NAME</th>
+                                <th scope="col">DESTINATION</th>
+                                <th scope="col" class="adminStartTime">START TIME</th>
+                                <th scope="col">FREQUENCY (MIN)</th>
+                                <th scope="col">NEXT ARRIVAL</th>
+                                <th scope="col">MINUTES AWAY</th>
+                                <th scope="col" class="adminEdit">EDIT</th>
+                                <th scope="col" class="adminDelete">DELETE</th>
                             </tr>
                         </thead>
                         <tbody>
                         </tbody>
                     </table>
                 </div>
-                <div class = "rightContainer">                    
+                <div class = "rightContainer">
+                    <br>
+                    <div id="noAdmin">
+                        <h3>Note</h3>
+                        <p>Only admins can edit Train schedules.</p>
+                        <br>
+                        <p>For testing purposes, use the below credentials.</p>
+                        <br>
+                        <p>Email:</p>
+                        <p>admin@skycomtech.com</p>
+                        <br>
+                        <p>Password:</p>
+                        <p>admin1</p>
+                    </div>
                     <div id="addTrains">
                         <h3>Add Train</h3>
                         <form id="addTrainsForm">
@@ -125,19 +147,25 @@
                                 <label for="trainName">Train Name</label>
                                 <input type="text" id="trainName">
                             </div>
+                            <br>
                             <div>
                                 <label for="trainDestination">Destination</label>
                                 <input type="text" id="trainDestination">
                             </div>
+                            <br>
                             <div>
                                 <label for="trainFirstTime">Start Time</label>
                                 <input type="text" id="trainFirstTime" required placeholder="(HH:mm) military time" onkeyup="myFunction()">
                             </div>
+                            <br>
                             <div>
                                 <label for="trainFrequency">Frequency</label>
                                 <input type="text" id="trainFrequency" placeholder="(min)">
                             </div>
-                            <button type="submit" id="addTrain">Submit</button>
+                            <br>
+                            <div class="buttonContainer">
+                                <button type="submit" class="button" id="addTrain">Submit</button>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -148,7 +176,8 @@
     <footer>
         2019 &copy; SkyComTech
     </footer>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.8.1/firebase.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
     <script src="./assets/javascript/main.js"></script>

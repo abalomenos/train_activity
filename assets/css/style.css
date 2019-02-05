@@ -331,7 +331,7 @@ table, th, td, tr {
     padding: 0 auto;
 }
 
-input[type=text], textarea {
+input[type=text], input[type=password], textarea {
     width: 100%;
     margin: 0 auto;
     padding: 15px;
